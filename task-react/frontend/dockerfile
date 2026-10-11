@@ -1,0 +1,27 @@
+#BUILD
+
+#Define la imagen que va a usar como base
+FROM node:22-alpine AS builder
+WORKDIR /app
+
+#Copia archivos de mis pc en el contenedor
+COPY package*.json ./
+RUN npm ci
+
+# El primer "punto" significa todos los archivos de mi carpeta y el segundo "punto" apunta a la carpeta base del contenedor
+COPY . .
+RUN npm run build
+
+#DESARROLLO
+FROM node:22-alpine AS development
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm ci
+
+COPY . .
+# El EXPOSE indica que puerto se puede acceder desde fuera
+EXPOSE 5173
+# Ejecuta el comando para iniciar
+CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
+

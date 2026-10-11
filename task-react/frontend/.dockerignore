@@ -1,0 +1,39 @@
+# Contexto de build: task-react/frontend
+# Docker busca este archivo en la RAIZ del contexto (build.context en
+# docker-compose.yml). Sin el, se envian los ~80 MB de node_modules
+# en cada build y "COPY . ." los pisa arriba del "npm ci".
+
+# Dependencias: se reinstalan dentro de la imagen
+node_modules
+npm-debug.log*
+yarn-error.log*
+
+# Artefactos de build: se generan adentro con "npm run build"
+dist
+dist-ssr
+
+# Secretos
+.env
+.env.*
+!.env.example
+
+# Docker
+Dockerfile
+dockerfile
+.dockerignore
+docker-compose*.yml
+
+# Git y metadatos
+.git
+.gitattributes
+
+# Editores y sistema
+.vscode
+.idea
+.DS_Store
+Thumbs.db
+desktop.ini
+*.log
+
+# Documentacion
+README.md

@@ -1,0 +1,38 @@
+# Dependencias (Node en raiz y en cualquier subcarpeta)
+node_modules
+**/node_modules
+npm-debug.log*
+yarn-error.log*
+
+# Artefactos de build
+dist
+**/dist
+dist-ssr
+target
+**/target
+build
+**/build
+
+# Secretos y variables de entorno
+.env
+.env.*
+!.env.example
+
+# Datos locales de la base
+*.db
+*.sqlite
+*.sqlite3
+data/*.dump
+
+# Git y metadatos
+.git
+.gitattributes
+
+# Editores y sistema
+.vscode
+.idea
+.DS_Store
+Thumbs.db
+desktop.ini
+*.log
+*.sw?

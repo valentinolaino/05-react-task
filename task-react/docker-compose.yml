@@ -1,0 +1,44 @@
+services: # Definimos
+  task_db:
+    image: postgres:16-alpine
+    container_name: task_db
+    restart: always # Se reinicia automaticamente si falla
+    environment: # Le paso las variables de entorno
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD} #Busca las variables en el archivo .env
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports: # El primer puerto es en donde va a estar en mi máquina y el segundo el puerto interno del contenedor
+      - "5433:5432"
+    healthcheck: # Sirve para que docker verifique si el contenedor esta funcionando
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes: # Guarda los datos de la base de datos en mi máquina para que no se pierdan si el contenedor se elimina
+      - task_db_data:/var/lib/postgresql/data # Volumen nombrado
+      - ./data:/docker-entrypoint-initdb.d # Carpeta donde pongo los scripts de inicialización de la base de datos
+    networks: # Define networks para que se comuniquen entre contenedores
+      - task_net
+
+  task_frontend: # Nombre de un contenedor individual
+    build:
+      context: ./frontend
+      target: development
+    container_name: task_frontend
+    env_file: ".env"
+    ports: # El primer puerto es en donde va a estar en mi máquina y el segundo el puerto interno del contenedor
+      - "5173:5173"
+    volumes: # Sirve para que el contenedor comparta carpetas con mi máquina
+      - ./frontend:/app # Los "guiones" es porque puedo pasar más de uno
+      - /app/node_modules
+    restart: unless-stopped # Se detiene solo de forma manual
+    networks: # Define networks para que se comuniquen entre contenedores
+      - task_net
+
+networks: # Creo los networks
+  task_net:
+    driver: bridge
+
+volumes: # Creo los volumes
+  task_db_data:
+    driver: local

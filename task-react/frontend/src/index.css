@@ -1,0 +1,136 @@
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Nunito:wght@400;500;600;700&display=swap");
+
+:root {
+  /* Tipografía */
+  --font-heading: "Outfit", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Nunito", ui-sans-serif, system-ui, sans-serif;
+
+  /* Superficies */
+  --bg: #f8fafc; /* slate-50  */
+  --surface: #ffffff;
+  --surface-soft: #fbfcfe;
+  --border: #e2e8f0; /* slate-200 */
+  --border-soft: #f1f5f9; /* slate-100 */
+
+  /* Texto */
+  --text: #334155; /* slate-700 */
+  --text-strong: #1e293b; /* slate-800 */
+  --text-muted: #64748b; /* slate-500 */
+  --text-faint: #94a3b8; /* slate-400 */
+  --text-heading: #1e1b4b; /* indigo-950 */
+
+  /* Primario */
+  --primary: #4f46e5; /* indigo-600 */
+  --primary-hover: #4338ca; /* indigo-700 */
+  --primary-soft: #eef2ff; /* indigo-50 */
+  --primary-border: #a5b4fc; /* indigo-300 */
+  --primary-ring: #818cf8; /* indigo-400 */
+
+  /* Pills de estado */
+  --neutral-bg: #f1f5f9;
+  --neutral-fg: #475569;
+  --info-bg: #eef2ff;
+  --info-fg: #4338ca;
+  --warn-bg: #fef3c7;
+  --warn-fg: #b45309;
+  --ok-bg: #d1fae5;
+  --ok-fg: #047857;
+  --danger-bg: #fee2e2;
+  --danger-border: #fecaca;
+  --danger-fg: #b91c1c;
+  --danger: #dc2626;
+
+  /* Formas */
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-2xl: 16px;
+
+  /* Elevación */
+  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 10%), 0 1px 2px -1px rgb(0 0 0 / 10%);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 10%), 0 2px 4px -2px rgb(0 0 0 / 10%);
+
+  /* Movimiento */
+  --transition: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  color-scheme: light;
+}
+
+/* ============================================================
+   Reset / base
+   ============================================================ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  width: 100%;
+  max-width: 1240px;
+  min-height: 100vh;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-heading);
+  color: var(--text-heading);
+}
+
+p {
+  margin: 0;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+::placeholder {
+  color: var(--text-faint);
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
