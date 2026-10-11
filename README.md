@@ -5,8 +5,7 @@ actividades). Permite crear, editar, finalizar, eliminar y filtrar tareas, con c
 un contexto de gestión de proyectos: proyecto, sprint, tipo de actividad, prioridad, persona
 asignada, fechas, etc.
 
-Este directorio contiene **solo el frontend**. La base de datos PostgreSQL y la orquestación de
-contenedores están definidas un nivel arriba, en [`../docker-compose.yml`](../docker-compose.yml).
+Este directorio contiene **solo el frontend**.
 
 ---
 
@@ -46,18 +45,7 @@ ejecutan **desde `task-react/`**, no desde `frontend/`.
 
 - Docker Desktop (o Docker Engine + Compose plugin) instalado y corriendo.
 
-### 2. Variables de entorno
-
-El compose lee las credenciales de la base desde `task-react/.env`. Si el archivo no existe,
-créalo con:
-
-```env
-POSTGRES_USER=postgres
-POSTGRES_PASSWORD=tu_password
-POSTGRES_DB=task_db
-```
-
-### 3. Levantar todo
+### 2. Levantar todo
 
 ```bash
 cd ..
@@ -67,8 +55,6 @@ docker compose up -d --build
 Luego:
 
 - Frontend: <http://localhost:5173>
-- PostgreSQL: `localhost:5433` (se mapea a `5432` dentro del contenedor para no chocar con un
-  Postgres local)
 
 Comandos útiles:
 
@@ -79,7 +65,7 @@ docker compose down                    # parar los contenedores
 docker compose down -v                 # parar y además borrar el volumen de la base de datos
 ```
 
-### 4. Levantar solo el frontend
+### 3. Levantar solo el frontend
 
 Si la base ya está corriendo (o si querés iterar rápido sobre la UI):
 
@@ -114,7 +100,6 @@ desde el navegador del host.
 | Servicio        | Imagen / build                              | Puerto      | Función                           |
 | --------------- | ------------------------------------------- | ----------- | --------------------------------- |
 | `task_frontend` | build de `./frontend`, target `development` | `5173:5173` | Dev server de Vite con hot-reload |
-| `task_db`       | `postgres:16-alpine`                        | `5433:5432` | Base de datos PostgreSQL          |
 
 Detalles importantes:
 
@@ -122,13 +107,6 @@ Detalles importantes:
   máquina se reflejan en el navegador sin reconstruir la imagen. Se agrega el volumen anónimo
   `/app/node_modules` para que las dependencias instaladas _dentro_ del contenedor no queden
   tapadas por la carpeta del host.
-- **Volumen nombrado `task_db_data`**: guarda los datos de PostgreSQL en `/var/lib/postgresql/data`
-  para que no se pierdan al recrear el contenedor.
-- **`./data:/docker-entrypoint-initdb.d`**: los scripts `.sql` que dejes en `task-react/data` se
-  ejecutan automáticamente **solo la primera vez** que se crea el volumen. Si agregás scripts
-  después, hay que recrear el volumen (`docker compose down -v && docker compose up -d`).
-- **Healthcheck** de `task_db` con `pg_isready`, y red compartida `task_net` para que ambos
-  contenedores se comuniquen por nombre (`task_db`).
 
 ---
 
@@ -162,8 +140,7 @@ Detalles importantes:
 | `sprint`          | texto  | Sí          | —                                       |
 
 > **Nota**: el estado de las tareas vive hoy en `useState` dentro de `App.jsx`, es decir, se pierde
-> al recargar el navegador. El contenedor `task_db` ya está levanta y listo para ser conectado; los
-> scripts de inicialización de la base se dejan en `task-react/data/`.
+> al recargar el navegador. 
 
 ---
 
